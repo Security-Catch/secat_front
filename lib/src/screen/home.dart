@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:front/main.dart';
+import 'package:front/src/screen/detail/guidePage.dart';
 import 'package:front/src/screen/detail/homeDetail.dart';
-import 'package:front/src/screen/guidePage.dart';
-import 'package:front/src/screen/settingPage.dart';
+import 'package:front/src/screen/detail/settingPage.dart';
 import 'package:front/src/util/notification.dart';
 
 class Home extends StatefulWidget {
@@ -32,6 +32,31 @@ class _HomeState extends State<Home> {
   void dispose() {
     streamController.close();
     super.dispose();
+  }
+
+  Container _homeBodyContainer(String title, String type) {
+    double uniHeightValue = MediaQuery.of(context).devicePixelRatio;
+    return Container(
+      decoration: const BoxDecoration(
+        border: Border(bottom: BorderSide(color: Color(0xff7F7F7F), width: 1)),
+      ),
+      child: ListTile(
+        title: Text(
+          title,
+          style: TextStyle(
+            fontSize: uniHeightValue * 5,
+          ),
+        ),
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => type == '가이드' ? GuidePage() : SettingPage(),
+            ),
+          );
+        },
+      ),
+    );
   }
 
   @override
@@ -76,50 +101,8 @@ class _HomeState extends State<Home> {
                 ),
               ),
             ),
-            Container(
-              decoration: const BoxDecoration(
-                border: Border(
-                    bottom: BorderSide(color: Color(0xff7F7F7F), width: 1)),
-              ),
-              child: ListTile(
-                title: Text(
-                  '피싱 대응 가이드',
-                  style: TextStyle(
-                    fontSize: uniHeightValue * 5,
-                  ),
-                ),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => GuidePage(),
-                    ),
-                  );
-                },
-              ),
-            ),
-            Container(
-              decoration: const BoxDecoration(
-                border: Border(
-                    bottom: BorderSide(color: Color(0xff7F7F7F), width: 1)),
-              ),
-              child: ListTile(
-                title: Text(
-                  '설정',
-                  style: TextStyle(
-                    fontSize: uniHeightValue * 5,
-                  ),
-                ),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => SettingPage(),
-                    ),
-                  );
-                },
-              ),
-            ),
+            _homeBodyContainer('피싱 대응 가이드', '가이드'),
+            _homeBodyContainer('설정', '설정'),
           ]),
         ),
       ),

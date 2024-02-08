@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:front/src/widget/alarmButtonPart.dart';
-import 'package:front/src/widget/reportPart.dart';
+import 'package:front/src/widget/alarmButtonPart/alarmButtonPart.dart';
+import 'package:front/src/widget/reportPart/reportPart.dart';
 
 class HomeDetail extends StatefulWidget {
   const HomeDetail({super.key});
