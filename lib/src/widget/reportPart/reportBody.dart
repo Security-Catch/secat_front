@@ -71,7 +71,7 @@ class _reportBodyAreaState extends State<reportBodyArea> {
               backgroundColor: Colors.white,
               title: myImage('asset/reportDoneLogo.png'),
               content: myText(
-                  '신고해주셔서 감사합니다\n신고해주신 메시지는 스미싱 검사 데이터로 사용됩니다\n더 나은 씨캣이 되도록 노력하겠습니다',
+                  '신고해주셔서 감사합니다\n신고된 메시지는 스미싱 검사 데이터로 사용됩니다\n더 나은 씨캣이 되도록 노력하겠습니다',
                   Colors.black),
               actions: <Widget>[
                 myButton('확인', Colors.black),
@@ -121,6 +121,7 @@ class _reportBodyAreaState extends State<reportBodyArea> {
         builder: (BuildContext context) {
           return AlertDialog(
               backgroundColor: Colors.white,
+              // title: myText("", Colors.black),
               content: myText('메시지를 입력해주세요', Colors.black),
               actions: <Widget>[
                 myButton('확인', Colors.black),
