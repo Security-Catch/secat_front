@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:front/src/widget/common/pageTitle.dart';
 
 class reportBodyArea extends StatefulWidget {
   const reportBodyArea(
@@ -134,15 +135,7 @@ class _reportBodyAreaState extends State<reportBodyArea> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          margin: EdgeInsets.only(
-              top: MediaQuery.of(context).devicePixelRatio * 3, left: 45),
-          child: Text(
-            widget.screenTitle,
-            style: TextStyle(
-                fontSize: MediaQuery.of(context).devicePixelRatio * 5),
-          ),
-        ),
+        pageTitle(title: widget.screenTitle),
         Container(
           margin: EdgeInsets.only(
               top: MediaQuery.of(context).devicePixelRatio * 10,
@@ -189,7 +182,7 @@ class _reportBodyAreaState extends State<reportBodyArea> {
                   right: 15),
               padding:
                   EdgeInsets.all(MediaQuery.of(context).devicePixelRatio * 6),
-              height: MediaQuery.of(context).devicePixelRatio * 20,
+              height: MediaQuery.of(context).devicePixelRatio * 23,
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                 color: Color(0xffF9E586),

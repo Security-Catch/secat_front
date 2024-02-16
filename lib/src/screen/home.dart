@@ -4,6 +4,7 @@ import 'package:front/src/screen/detail/guidePage.dart';
 import 'package:front/src/screen/detail/homeDetail.dart';
 import 'package:front/src/screen/detail/settingPage.dart';
 import 'package:front/src/util/notification.dart';
+import 'package:front/src/widget/common/appBarArea.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});

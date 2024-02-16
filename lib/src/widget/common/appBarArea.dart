@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class reportAppBarArea extends StatelessWidget implements PreferredSizeWidget {
+class appBarArea extends StatelessWidget implements PreferredSizeWidget {
   final AppBar appBar;
 
-  const reportAppBarArea({super.key, required this.appBar});
+  const appBarArea({super.key, required this.appBar});
 
   @override
   Widget build(BuildContext context) {
