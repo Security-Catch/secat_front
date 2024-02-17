@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:front/src/widget/reportPart/reportAppBar.dart';
+import 'package:front/src/widget/common/appBarArea.dart';
 import 'package:front/src/widget/reportPart/reportBody.dart';
 
 class checkPage extends StatefulWidget {
@@ -13,9 +13,10 @@ class _checkPageState extends State<checkPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: reportAppBarArea(
+      appBar: appBarArea(
         appBar: AppBar(),
       ),
+      resizeToAvoidBottomInset: false,
       body: reportBodyArea(
           screenTitle: '메시지 검사하기',
           hiddenMessage: '검사하고 싶은 메시지를 입력해주세요',
