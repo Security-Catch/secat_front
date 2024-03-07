@@ -15,8 +15,6 @@ class SettingPage extends StatelessWidget {
           context: context,
           builder: (BuildContext context) {
             return CupertinoAlertDialog(
-                // backgroundColor: Colors.white,
-                // title: Text("로그아웃"),
                 content: Text("로그아웃 하시겠습니까?"),
                 actions: <Widget>[
                   TextButton(
@@ -57,10 +55,10 @@ class SettingPage extends StatelessWidget {
           pageTitle(title: "설정"),
           GestureDetector(
             onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => editAuthorityPhoneNum()));
+              // Navigator.push(
+              //     context,
+              //     MaterialPageRoute(
+              //         builder: (context) => editAuthorityPhoneNum()));
             },
             child: settingContainer(
               text: "번호 수정",
@@ -68,7 +66,7 @@ class SettingPage extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () {
-              handleReportSubmitted();
+              // handleReportSubmitted();
             },
             child: settingContainer(
               text: "로그아웃",

@@ -32,9 +32,9 @@ class _reportBodyAreaState extends State<reportBodyArea> {
   TextButton myButton(String text, Color textColor) {
     return TextButton(
       onPressed: () {
-        _textController.clear();
-        Navigator.pop(context);
-        if (text == '신고하기') handleReportSubmitted(text);
+        // _textController.clear();
+        // Navigator.pop(context);
+        // if (text == '신고하기') handleReportSubmitted(text);
       },
       child: Text(
         text,
@@ -166,13 +166,13 @@ class _reportBodyAreaState extends State<reportBodyArea> {
         ),
         GestureDetector(
           onTap: () {
-            if (!_textController.text.isEmpty) {
-              widget.type == '신고'
-                  ? handleReportSubmitted(_textController.text)
-                  : handleCheckSubmitted(_textController.text);
-              _setActive();
-            } else
-              handleNullSubmitted();
+            //   if (!_textController.text.isEmpty) {
+            //     widget.type == '신고'
+            //         ? handleReportSubmitted(_textController.text)
+            //         : handleCheckSubmitted(_textController.text);
+            //     _setActive();
+            //   } else
+            //     handleNullSubmitted();
           },
           child: Center(
             child: Container(
