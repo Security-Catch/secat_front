@@ -114,19 +114,30 @@ class _reportBodyAreaState extends State<reportBodyArea> {
   }
 
   void handleReportSubmitted(String text) async {
-    await showDialog<void>(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-              backgroundColor: Colors.white,
-              title: myImage('asset/reportDoneLogo.png'),
-              content: myText(
-                  '신고해주셔서 감사합니다\n신고해주신 메시지는 스미싱 검사 데이터로 사용됩니다\n더 나은 씨캣이 되도록 노력하겠습니다',
-                  Colors.black),
-              actions: <Widget>[
-                myButton('확인', Colors.black),
-              ]);
-        });
+    final url = Uri.parse("http://localhost:3000/smishing/report/")
+        .replace(queryParameters: {
+      'message': text,
+    });
+    final response = await http.get(
+      url,
+    );
+    var jsonResponse = jsonDecode(response.body);
+    print(jsonResponse['isSucess']);
+    if (jsonResponse['isSucess']) {
+      await showDialog<void>(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+                backgroundColor: Colors.white,
+                title: myImage('asset/reportDoneLogo.png'),
+                content: myText(
+                    '신고해주셔서 감사합니다\n신고해주신 메시지는 스미싱 검사 데이터로 사용됩니다\n더 나은 씨캣이 되도록 노력하겠습니다',
+                    Colors.black),
+                actions: <Widget>[
+                  myButton('확인', Colors.black),
+                ]);
+          });
+    }
   }
 
   void handleNullSubmitted() async {
