@@ -37,6 +37,7 @@ dependencies:
   get: ^4.6.6
   flutter_local_notifications: ^16.3.2
   url_launcher: ^6.2.5
+  http: ^1.2.0
 
 dev_dependencies:
   flutter_test:

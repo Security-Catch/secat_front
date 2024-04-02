@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:front/src/widget/common/pageTitle.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class reportBodyArea extends StatefulWidget {
   const reportBodyArea(
@@ -23,18 +25,18 @@ class _reportBodyAreaState extends State<reportBodyArea> {
 
   bool _active = false;
 
-  _setActive() {
-    setState(() {
-      _active = !_active;
-    });
-  }
+  // _setActive() {
+  //   setState(() {
+  //     _active = !_active;
+  //   });
+  // }
 
   TextButton myButton(String text, Color textColor) {
     return TextButton(
       onPressed: () {
-        // _textController.clear();
-        // Navigator.pop(context);
-        // if (text == '신고하기') handleReportSubmitted(text);
+        _textController.clear();
+        Navigator.pop(context);
+        if (text == '신고하기') handleReportSubmitted(text);
       },
       child: Text(
         text,
@@ -81,6 +83,17 @@ class _reportBodyAreaState extends State<reportBodyArea> {
   }
 
   void handleCheckSubmitted(String text) async {
+    final url = Uri.parse("http://localhost:3000/smishing/check/")
+        .replace(queryParameters: {
+      'message': text,
+    });
+    final response = await http.get(
+      url,
+    );
+    var jsonResponse = jsonDecode(response.body);
+    print(jsonResponse['result']);
+    _active = jsonResponse['result'];
+
     String imageUrl = _active ? 'asset/safeLogo.png' : 'asset/dangerLogo.png';
     String message = _active ? '90% 안전한 문자 입니다' : "90% 스미싱 문자로 의심됩니다";
     Color textColor = _active ? Colors.green : Colors.red;
@@ -95,7 +108,7 @@ class _reportBodyAreaState extends State<reportBodyArea> {
               content: myText(message, textColor),
               actions: <Widget>[
                 myButton("확인", checkColor),
-                if (_active) myButton('신고하기', Colors.black),
+                if (!_active) myButton('신고하기', Colors.black),
               ]);
         });
   }
@@ -166,13 +179,13 @@ class _reportBodyAreaState extends State<reportBodyArea> {
         ),
         GestureDetector(
           onTap: () {
-            //   if (!_textController.text.isEmpty) {
-            //     widget.type == '신고'
-            //         ? handleReportSubmitted(_textController.text)
-            //         : handleCheckSubmitted(_textController.text);
-            //     _setActive();
-            //   } else
-            //     handleNullSubmitted();
+            if (!_textController.text.isEmpty) {
+              widget.type == '신고'
+                  ? handleReportSubmitted(_textController.text)
+                  : handleCheckSubmitted(_textController.text);
+              // _setActive();
+            } else
+              handleNullSubmitted();
           },
           child: Center(
             child: Container(
