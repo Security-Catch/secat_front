@@ -26,6 +26,7 @@ class FlutterLocalNotification {
 
     await flutterLocalNotificationsPlugin.initialize(
       initializationSettings,
+      onDidReceiveNotificationResponse: onDidReceiveNotificationResopnse,
       onDidReceiveBackgroundNotificationResponse:
           onDidReceiveNotificationResopnse,
     );
@@ -40,9 +41,14 @@ class FlutterLocalNotification {
           badge: true,
           sound: true,
         );
+    flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
+        ?.requestNotificationsPermission();
   }
 
-  static Future<void> showNotification() async {
+  static Future<void> showNotification(
+      String from, String m, String result) async {
     const AndroidNotificationDetails androidNotificationDetails =
         AndroidNotificationDetails('channel id', 'channel name',
             channelDescription: 'channel description',
@@ -55,8 +61,9 @@ class FlutterLocalNotification {
       iOS: DarwinNotificationDetails(badgeNumber: 1),
     );
 
-    await flutterLocalNotificationsPlugin.show(
-        0, "Security Catch", "010-xxxx-xxxx 스미싱으로 의심됩니다", notificationDetails,
+    await Future.delayed(const Duration(seconds: 8));
+    await flutterLocalNotificationsPlugin.show(0, "Security Catch",
+        "$from $m $result 스미싱으로 의심됩니다", notificationDetails,
         payload: "HELLOWORLD");
   }
 
@@ -70,7 +77,21 @@ class FlutterLocalNotification {
     }
   }
 
-  static onBackgroundNotificationresponse() async {
+  // static void onBackgroundNotificationresponse(
+  //     NotificationResponse notificationResponse) async {
+  //   final NotificationAppLaunchDetails? notificationAppLaunchDetails =
+  //       await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
+  //   if (notificationAppLaunchDetails?.didNotificationLaunchApp ?? false) {
+  //     final String payload = notificationResponse.payload ?? "";
+  //     if (notificationResponse.payload != null ||
+  //         notificationResponse.payload!.isNotEmpty) {
+  //       print("BACKGROUND PAYLOAD: $payload");
+  //       streamController.add(payload);
+  //     }
+  //   }
+  // }
+
+  static void onBackgroundNotificationresponse() async {
     final NotificationAppLaunchDetails? notificationAppLaunchDetails =
         await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
     if (notificationAppLaunchDetails?.didNotificationLaunchApp ?? false) {
