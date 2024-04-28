@@ -4,7 +4,10 @@ import 'package:front/src/screen/detail/guidePage.dart';
 import 'package:front/src/screen/detail/homeDetail.dart';
 import 'package:front/src/screen/detail/settingPage.dart';
 import 'package:front/src/util/notification.dart';
+import 'package:front/src/util/smsDetection.dart';
 import 'package:front/src/widget/common/appBarArea.dart';
+import 'package:flutter/foundation.dart' as foundation;
+import 'package:telephony/telephony.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -14,19 +17,49 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  bool get isiOS =>
+      foundation.defaultTargetPlatform == foundation.TargetPlatform.iOS;
+  String _message = "";
+  final telephony = Telephony.instance;
+
   @override
   void initState() {
-    FlutterLocalNotification.init();
+    if (!isiOS) {
+      initPlatformState();
+      FlutterLocalNotification.init();
 
-    Future.delayed(const Duration(seconds: 3),
-        FlutterLocalNotification.requestNotificationPermission());
+      Future.delayed(const Duration(seconds: 3),
+          FlutterLocalNotification.requestNotificationPermission());
+    }
+    super.initState();
+  }
 
-    void initState() {
-      super.initState();
-      FlutterLocalNotification.requestNotificationPermission(); // 알림 권한 요청
+  onMessage(SmsMessage message) async {
+    setState(() {
+      _message = message.body ?? "Error reading message body.";
+      String m = message.body ?? "Error reading message body";
+      String from = message.address ?? "Error reading message address";
+      debugPrint("onForegroundMessage called $m - $from");
+      FlutterSmsDetection.checkHandleSMS(from, m);
+      // FlutterLocalNotification.showNotification(from, m);
+    });
+  }
+
+  Future<void> initPlatformState() async {
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+
+    bool? result = await telephony.requestPhoneAndSmsPermissions;
+
+    if (result != null && result) {
+      telephony.listenIncomingSms(
+          onNewMessage: onMessage,
+          onBackgroundMessage: FlutterSmsDetection.onBackgroundMessage);
     }
 
-    super.initState();
+    if (!mounted) return;
   }
 
   @override

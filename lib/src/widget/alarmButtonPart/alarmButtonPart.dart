@@ -16,43 +16,14 @@ class _AlarmButtonState extends State<AlarmButton> {
   _setActive() {
     setState(() {
       _active = !_active;
-      // if (_active) {
-      //   _startTime();
-      // }
     });
-  }
-
-  int _counter = 0;
-  int _targetNumber = 3;
-  Timer? _timer;
-
-  void _resetCounter() {
-    setState(() {
-      _counter = 0;
-    });
-  }
-
-  void _startTime() {
-    _timer = Timer.periodic(const Duration(seconds: 1), (_) {
-      setState(() {
-        _counter++;
-        if (_counter == _targetNumber) {
-          FlutterLocalNotification.showNotification();
-          _stopTimer();
-        }
-      });
-    });
-  }
-
-  void _stopTimer() {
-    _timer?.cancel();
-    _resetCounter();
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        // FlutterLocalNotification.showNotification();
         _setActive();
       },
       child: Center(
