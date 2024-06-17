@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:front/src/util/notification.dart';
+import 'package:front/src/widget/common/activeClass.dart';
 
 class AlarmButton extends StatefulWidget {
   const AlarmButton({super.key});
@@ -11,11 +12,12 @@ class AlarmButton extends StatefulWidget {
 }
 
 class _AlarmButtonState extends State<AlarmButton> {
-  bool _active = true;
+  // bool active = true;
 
   _setActive() {
     setState(() {
-      _active = !_active;
+      activeClass().active = !activeClass().active;
+      print("activeClass() : ${activeClass().active}");
     });
   }
 
@@ -29,7 +31,9 @@ class _AlarmButtonState extends State<AlarmButton> {
       child: Center(
         child: Container(
           decoration: BoxDecoration(
-            color: _active ? const Color(0xffF9E586) : const Color(0xffD9D9D9),
+            color: activeClass().active
+                ? const Color(0xffF9E586)
+                : const Color(0xffD9D9D9),
             borderRadius: const BorderRadius.all(Radius.circular(200)),
           ),
           width: MediaQuery.of(context).size.width - 60,
@@ -42,7 +46,7 @@ class _AlarmButtonState extends State<AlarmButton> {
               children: <Widget>[
                 Container(
                   margin: const EdgeInsets.only(bottom: 5),
-                  child: _active
+                  child: activeClass().active
                       ? Image.asset(
                           'asset/mainLogo.png',
                           width: MediaQuery.of(context).size.width * 0.4,
@@ -54,7 +58,7 @@ class _AlarmButtonState extends State<AlarmButton> {
                           height: MediaQuery.of(context).size.width * 0.5,
                         ),
                 ),
-                _active
+                activeClass().active
                     ? Text(
                         '씨캣이 스미싱으로부터\n안전하게 지켜드릴게요!',
                         style: TextStyle(

@@ -1,6 +1,12 @@
 import 'dart:async';
+import 'dart:io';
+import 'dart:math';
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:front/main.dart';
+import 'package:timezone/data/latest_all.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
+import 'package:url_launcher/url_launcher.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
@@ -30,6 +36,12 @@ class FlutterLocalNotification {
       onDidReceiveBackgroundNotificationResponse:
           onDidReceiveNotificationResopnse,
     );
+    if (Platform.isAndroid) {
+      flutterLocalNotificationsPlugin
+          .resolvePlatformSpecificImplementation<
+              AndroidFlutterLocalNotificationsPlugin>()
+          ?.requestNotificationsPermission();
+    }
   }
 
   static requestNotificationPermission() {
@@ -47,24 +59,96 @@ class FlutterLocalNotification {
         ?.requestNotificationsPermission();
   }
 
+  Future<void> showFullScreenNotification(BuildContext context) async {
+    await showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: const Text('Turn off your screen'),
+        content: const Text(
+            'to see the full-screen intent in 5 seconds, press OK and TURN '
+            'OFF your screen'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () async {
+              await flutterLocalNotificationsPlugin.zonedSchedule(
+                  0,
+                  'scheduled title',
+                  'scheduled body',
+                  tz.TZDateTime.now(tz.local).add(const Duration(seconds: 5)),
+                  const NotificationDetails(
+                      android: AndroidNotificationDetails(
+                          'full screen channel id', 'full screen channel name',
+                          channelDescription: 'full screen channel description',
+                          priority: Priority.high,
+                          importance: Importance.high,
+                          fullScreenIntent: true)),
+                  androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+                  uiLocalNotificationDateInterpretation:
+                      UILocalNotificationDateInterpretation.absoluteTime);
+
+              Navigator.pop(context);
+            },
+            child: const Text('OK'),
+          )
+        ],
+      ),
+    );
+  }
+
   static Future<void> showNotification(
-      String from, String m, String result) async {
+    String from,
+    String m,
+    String result,
+  ) async {
     const AndroidNotificationDetails androidNotificationDetails =
-        AndroidNotificationDetails('channel id', 'channel name',
-            channelDescription: 'channel description',
-            importance: Importance.max,
-            priority: Priority.max,
-            showWhen: false);
+        AndroidNotificationDetails(
+      'channel id',
+      'channel name',
+      channelDescription: 'channel description',
+      importance: Importance.max,
+      priority: Priority.max,
+      showWhen: false,
+      autoCancel: false,
+      visibility: NotificationVisibility.private,
+      fullScreenIntent: true,
+      // setAsGroupSummary: true,
+
+      groupKey: 'com.android.example.WORK_EMAIL',
+      styleInformation: DefaultStyleInformation(true, true),
+    );
 
     const NotificationDetails notificationDetails = NotificationDetails(
       android: androidNotificationDetails,
       iOS: DarwinNotificationDetails(badgeNumber: 1),
     );
 
-    await Future.delayed(const Duration(seconds: 8));
-    await flutterLocalNotificationsPlugin.show(0, "Security Catch",
-        "$from $m $result 스미싱으로 의심됩니다", notificationDetails,
-        payload: "HELLOWORLD");
+    // int groupNotificationCount = 1;
+
+    await Future.delayed(const Duration(seconds: 6));
+    await flutterLocalNotificationsPlugin.show(Random().nextInt(1000000),
+        "Security Catch", "$m\n $result 스미싱으로 의심됩니다", notificationDetails,
+        payload: "$from");
+
+    const AndroidNotificationDetails androidPlatformChannelSpecifics =
+        AndroidNotificationDetails('channel id', 'channel name',
+            channelDescription: 'channel description',
+            onlyAlertOnce: true,
+            groupKey: 'com.android.example.WORK_EMAIL',
+            setAsGroupSummary: true);
+
+    // 플랫폼별 설정 - 현재 안드로이드만 적용됨
+    const NotificationDetails platformChannelSpecifics =
+        NotificationDetails(android: androidPlatformChannelSpecifics);
+    // 그룹용 알림 출력
+    // 이때는 ID를 0으로 고정시켜 새로 생성되지 않게 한다.
+    await flutterLocalNotificationsPlugin.show(
+        0, '', '', platformChannelSpecifics);
   }
 
   static void onDidReceiveNotificationResopnse(
@@ -73,7 +157,14 @@ class FlutterLocalNotification {
     if (notificationResponse.payload != null ||
         notificationResponse.payload!.isNotEmpty) {
       print('FOREGROUND PAYLOAD : $payload');
-      streamController.add(payload);
+      // streamController.add(payload);
+      String cont = 'sms:' + payload;
+      final url = Uri.parse(cont);
+      if (await canLaunchUrl(url)) {
+        launchUrl(url);
+      } else {
+        print("Can't launch $url");
+      }
     }
   }
 
@@ -97,8 +188,15 @@ class FlutterLocalNotification {
     if (notificationAppLaunchDetails?.didNotificationLaunchApp ?? false) {
       String payload =
           notificationAppLaunchDetails!.notificationResponse?.payload ?? "";
-      print("BACKGROUND PAYLOAD: $payload");
-      streamController.add(payload);
+      print("BACKGROUND PAYLOAD : $payload");
+      String cont = 'sms:' + payload;
+      final url = Uri.parse(cont);
+      if (await canLaunchUrl(url)) {
+        launchUrl(url);
+      } else {
+        print("Can't launch $url");
+      }
+      // streamController.add(payload);
     }
   }
 }

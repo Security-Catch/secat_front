@@ -1,0 +1,3 @@
+class activeClass {
+  bool active = ;
+}
