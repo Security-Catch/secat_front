@@ -114,7 +114,7 @@ class FlutterLocalNotification {
       importance: Importance.max,
       priority: Priority.max,
       showWhen: false,
-      autoCancel: false,
+      autoCancel: true,
       visibility: NotificationVisibility.private,
       fullScreenIntent: true,
       // setAsGroupSummary: true,

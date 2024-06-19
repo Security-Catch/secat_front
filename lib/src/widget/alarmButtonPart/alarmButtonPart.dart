@@ -12,12 +12,12 @@ class AlarmButton extends StatefulWidget {
 }
 
 class _AlarmButtonState extends State<AlarmButton> {
-  // bool active = true;
+  bool active = true;
 
   _setActive() {
     setState(() {
-      activeClass().active = !activeClass().active;
-      print("activeClass() : ${activeClass().active}");
+      // activeClass().active = !activeClass().active;
+      // print("activeClass() : ${activeClass().active}");
     });
   }
 
@@ -31,9 +31,7 @@ class _AlarmButtonState extends State<AlarmButton> {
       child: Center(
         child: Container(
           decoration: BoxDecoration(
-            color: activeClass().active
-                ? const Color(0xffF9E586)
-                : const Color(0xffD9D9D9),
+            color: active ? const Color(0xffF9E586) : const Color(0xffD9D9D9),
             borderRadius: const BorderRadius.all(Radius.circular(200)),
           ),
           width: MediaQuery.of(context).size.width - 60,
@@ -46,7 +44,7 @@ class _AlarmButtonState extends State<AlarmButton> {
               children: <Widget>[
                 Container(
                   margin: const EdgeInsets.only(bottom: 5),
-                  child: activeClass().active
+                  child: active
                       ? Image.asset(
                           'asset/mainLogo.png',
                           width: MediaQuery.of(context).size.width * 0.4,
@@ -58,7 +56,7 @@ class _AlarmButtonState extends State<AlarmButton> {
                           height: MediaQuery.of(context).size.width * 0.5,
                         ),
                 ),
-                activeClass().active
+                active
                     ? Text(
                         '씨캣이 스미싱으로부터\n안전하게 지켜드릴게요!',
                         style: TextStyle(

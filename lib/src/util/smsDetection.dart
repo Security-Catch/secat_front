@@ -180,8 +180,9 @@ class FlutterSmsDetection {
     var jsonResponse = jsonDecode(response.body);
     print(jsonResponse['result']);
     bool _active = jsonResponse['result'];
-    print("activeClass() : ${activeClass().active}");
-    if (!_active && activeClass().active) {
+    // print("activeClass() : ${activeClass().active}");
+    // && activeClass().active
+    if (!_active ) {
       if (message.length > 15) {
         message = "${message.substring(0, 15)}...";
       }
