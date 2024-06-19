@@ -112,15 +112,32 @@ class FlutterLocalNotification {
       'channel name',
       channelDescription: 'channel description',
       importance: Importance.max,
-      priority: Priority.max,
+      priority: Priority.high,
       showWhen: false,
-      autoCancel: true,
-      visibility: NotificationVisibility.private,
+      autoCancel: false,
+      ongoing: true,
+      styleInformation: BigTextStyleInformation(m),
+      // visibility: NotificationVisibility.private,
       fullScreenIntent: true,
       // setAsGroupSummary: true,
+      actions: <AndroidNotificationAction>[
+        AndroidNotificationAction(
+          'id_2',
+          '확인',
+        ),
+        AndroidNotificationAction(
+          "navigationActionId",
+          '메시지 확인',
+          titleColor: Color.fromARGB(255, 255, 0, 0),
+          showsUserInterface: true,
+          // By default, Android plugin will dismiss the notification when the
+          // user tapped on a action (this mimics the behavior on iOS).
+          cancelNotification: false,
+        ),
+      ],
 
       groupKey: 'com.android.example.WORK_EMAIL',
-      styleInformation: DefaultStyleInformation(true, true),
+      // styleInformation: DefaultStyleInformation(true, true),
     );
 
     const NotificationDetails notificationDetails = NotificationDetails(
@@ -132,7 +149,7 @@ class FlutterLocalNotification {
 
     await Future.delayed(const Duration(seconds: 6));
     await flutterLocalNotificationsPlugin.show(Random().nextInt(1000000),
-        "Security Catch", "$m\n $result 스미싱으로 의심됩니다", notificationDetails,
+        "Security Catch", "$m\n $result", notificationDetails,
         payload: "$from");
 
     const AndroidNotificationDetails androidPlatformChannelSpecifics =

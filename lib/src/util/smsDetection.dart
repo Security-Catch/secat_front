@@ -182,10 +182,11 @@ class FlutterSmsDetection {
     bool _active = jsonResponse['result'];
     // print("activeClass() : ${activeClass().active}");
     // && activeClass().active
-    if (!_active ) {
+    if (!_active) {
       if (message.length > 15) {
         message = "${message.substring(0, 15)}...";
       }
+      // FlutterLocalNotification.showFullScreenNotification();
       FlutterLocalNotification.showNotification(
           from, message, jsonResponse['message']);
       // return _active;
