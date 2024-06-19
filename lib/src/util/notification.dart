@@ -69,7 +69,7 @@ class FlutterLocalNotification {
       importance: Importance.max,
       priority: Priority.max,
       showWhen: false,
-      autoCancel: false,
+      autoCancel: true,
       ongoing: true,
       styleInformation: BigTextStyleInformation(fullMessage),
       // styleInformation: DefaultStyleInformation(true, true),
