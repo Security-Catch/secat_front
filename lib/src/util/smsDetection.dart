@@ -183,12 +183,11 @@ class FlutterSmsDetection {
     // print("activeClass() : ${activeClass().active}");
     // && activeClass().active
     if (!_active) {
-      if (message.length > 15) {
-        message = "${message.substring(0, 15)}...";
-      }
+      String fullMessage =
+          from + "의 연락\n" + message + "\n" + jsonResponse['message'];
       // FlutterLocalNotification.showFullScreenNotification();
       FlutterLocalNotification.showNotification(
-          from, message, jsonResponse['message']);
+          from, message, jsonResponse['message'], fullMessage);
       // return _active;
     }
   }

@@ -59,73 +59,29 @@ class FlutterLocalNotification {
         ?.requestNotificationsPermission();
   }
 
-  Future<void> showFullScreenNotification(BuildContext context) async {
-    await showDialog(
-      context: context,
-      builder: (_) => AlertDialog(
-        title: const Text('Turn off your screen'),
-        content: const Text(
-            'to see the full-screen intent in 5 seconds, press OK and TURN '
-            'OFF your screen'),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: const Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () async {
-              await flutterLocalNotificationsPlugin.zonedSchedule(
-                  0,
-                  'scheduled title',
-                  'scheduled body',
-                  tz.TZDateTime.now(tz.local).add(const Duration(seconds: 5)),
-                  const NotificationDetails(
-                      android: AndroidNotificationDetails(
-                          'full screen channel id', 'full screen channel name',
-                          channelDescription: 'full screen channel description',
-                          priority: Priority.high,
-                          importance: Importance.high,
-                          fullScreenIntent: true)),
-                  androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-                  uiLocalNotificationDateInterpretation:
-                      UILocalNotificationDateInterpretation.absoluteTime);
-
-              Navigator.pop(context);
-            },
-            child: const Text('OK'),
-          )
-        ],
-      ),
-    );
-  }
-
   static Future<void> showNotification(
-    String from,
-    String m,
-    String result,
-  ) async {
-    const AndroidNotificationDetails androidNotificationDetails =
+      String from, String m, String result, String fullMessage) async {
+    AndroidNotificationDetails androidNotificationDetails =
         AndroidNotificationDetails(
       'channel id',
       'channel name',
       channelDescription: 'channel description',
       importance: Importance.max,
-      priority: Priority.high,
+      priority: Priority.max,
       showWhen: false,
       autoCancel: false,
       ongoing: true,
-      styleInformation: BigTextStyleInformation(m),
+      styleInformation: BigTextStyleInformation(fullMessage),
+      // styleInformation: DefaultStyleInformation(true, true),
       // visibility: NotificationVisibility.private,
       fullScreenIntent: true,
       // setAsGroupSummary: true,
       actions: <AndroidNotificationAction>[
-        AndroidNotificationAction(
+        const AndroidNotificationAction(
           'id_2',
           '확인',
         ),
-        AndroidNotificationAction(
+        const AndroidNotificationAction(
           "navigationActionId",
           '메시지 확인',
           titleColor: Color.fromARGB(255, 255, 0, 0),
@@ -137,10 +93,9 @@ class FlutterLocalNotification {
       ],
 
       groupKey: 'com.android.example.WORK_EMAIL',
-      // styleInformation: DefaultStyleInformation(true, true),
     );
 
-    const NotificationDetails notificationDetails = NotificationDetails(
+    NotificationDetails notificationDetails = NotificationDetails(
       android: androidNotificationDetails,
       iOS: DarwinNotificationDetails(badgeNumber: 1),
     );
@@ -149,7 +104,7 @@ class FlutterLocalNotification {
 
     await Future.delayed(const Duration(seconds: 6));
     await flutterLocalNotificationsPlugin.show(Random().nextInt(1000000),
-        "Security Catch", "$m\n $result", notificationDetails,
+        "Security Catch", "$m $result", notificationDetails,
         payload: "$from");
 
     const AndroidNotificationDetails androidPlatformChannelSpecifics =
