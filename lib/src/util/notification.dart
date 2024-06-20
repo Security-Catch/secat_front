@@ -71,17 +71,15 @@ class FlutterLocalNotification {
       priority: Priority.max,
       showWhen: false,
       autoCancel: true,
-      ongoing: true,
+      ongoing: false,
       styleInformation: BigTextStyleInformation(fullMessage),
       // styleInformation: DefaultStyleInformation(true, true),
       // visibility: NotificationVisibility.private,
       fullScreenIntent: true,
       // setAsGroupSummary: true,
       actions: <AndroidNotificationAction>[
-        const AndroidNotificationAction(
-          'id_2',
-          '확인',
-        ),
+        // const AndroidNotificationAction('id_2', '확인',
+        //     cancelNotification: true, showsUserInterface: false),
         const AndroidNotificationAction(
           "navigationActionId",
           '메시지 확인',
@@ -89,7 +87,7 @@ class FlutterLocalNotification {
           showsUserInterface: true,
           // By default, Android plugin will dismiss the notification when the
           // user tapped on a action (this mimics the behavior on iOS).
-          cancelNotification: false,
+          cancelNotification: true,
         ),
       ],
 
