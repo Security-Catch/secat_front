@@ -9,8 +9,8 @@ StreamController<String> streamController = StreamController.broadcast();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   FlutterLocalNotification.onBackgroundNotificationresponse();
+
   await FlutterSmsDetection.initializeService();
 
   runApp(const MyApp());

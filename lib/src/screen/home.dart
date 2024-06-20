@@ -26,9 +26,8 @@ class _HomeState extends State<Home> {
   void initState() {
     if (!isiOS) {
       initPlatformState();
-      FlutterLocalNotification.init();
-
       // Future.delayed(const Duration(seconds: 3),
+      FlutterLocalNotification.init();
       FlutterLocalNotification.requestNotificationPermission();
     }
     super.initState();

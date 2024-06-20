@@ -184,7 +184,7 @@ class FlutterSmsDetection {
     // && activeClass().active
     if (!_active) {
       String fullMessage =
-          from + "의 연락\n" + message + "\n" + jsonResponse['message'];
+          from + "으로 온 연락\n" + jsonResponse['message'] + "\n" + message;
       // FlutterLocalNotification.showFullScreenNotification();
       FlutterLocalNotification.showNotification(
           from, message, jsonResponse['message'], fullMessage);

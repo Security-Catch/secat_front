@@ -66,6 +66,7 @@ class FlutterLocalNotification {
       'channel id',
       'channel name',
       channelDescription: 'channel description',
+      // sound: RawResourceAndroidNotificationSound("sound"),
       importance: Importance.max,
       priority: Priority.max,
       showWhen: false,
