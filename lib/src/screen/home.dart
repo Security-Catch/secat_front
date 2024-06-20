@@ -8,6 +8,7 @@ import 'package:front/src/util/smsDetection.dart';
 import 'package:front/src/widget/common/appBarArea.dart';
 import 'package:flutter/foundation.dart' as foundation;
 import 'package:telephony/telephony.dart';
+import 'dart:io' show Platform;
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -17,14 +18,14 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  bool get isiOS =>
-      foundation.defaultTargetPlatform == foundation.TargetPlatform.iOS;
+  // bool get isiOS =>
+  //     foundation.defaultTargetPlatform == foundation.TargetPlatform.iOS;
   String _message = "";
   final telephony = Telephony.instance;
 
   @override
   void initState() {
-    if (!isiOS) {
+    if (Platform.isAndroid) {
       initPlatformState();
       // Future.delayed(const Duration(seconds: 3),
       FlutterLocalNotification.init();

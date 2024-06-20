@@ -95,7 +95,7 @@ class _reportBodyAreaState extends State<reportBodyArea> {
     _active = jsonResponse['result'];
 
     String imageUrl = _active ? 'asset/safeLogo.png' : 'asset/dangerLogo.png';
-    String message = _active ? '90% 안전한 문자 입니다' : "90% 스미싱 문자로 의심됩니다";
+    String message = jsonResponse['message'];
     Color textColor = _active ? Colors.green : Colors.red;
     Color checkColor = _active ? Colors.black : Colors.grey;
 

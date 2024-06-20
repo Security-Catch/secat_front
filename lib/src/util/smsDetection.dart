@@ -137,8 +137,8 @@ class FlutterSmsDetection {
 
           // if you don't using custom notification, uncomment this
           service.setForegroundNotificationInfo(
-            title: "My App Service",
-            content: "Updated at ${DateTime.now()}",
+            title: "Security Catch",
+            content: "작동 중\n ${DateTime.now()}",
           );
         }
       }
