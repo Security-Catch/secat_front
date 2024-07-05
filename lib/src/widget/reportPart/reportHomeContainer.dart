@@ -44,6 +44,7 @@ class homeContainer extends StatelessWidget {
             ),
             Text(buttonName,
                 style: TextStyle(
+                    fontFamily: "Happiness-Sans-Bold",
                     fontSize: MediaQuery.of(context).devicePixelRatio * 8))
           ],
         ),

@@ -53,7 +53,7 @@ class GuidePage extends StatelessWidget {
                             CallToReportContainer(
                                 phone: "118", message: " 사이버테러 인터넷진흥원"),
                             CallToReportTutorial(
-                                detailText: "스미싱 의심 문자를 받았거나 악성 앱 감염이 의심욀 때"),
+                                detailText: "스미싱 의심 문자를 받았거나 악성 앱 감염이 의심될 때"),
                           ],
                         ),
                       ),

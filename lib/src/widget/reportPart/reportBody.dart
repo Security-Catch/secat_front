@@ -41,6 +41,7 @@ class _reportBodyAreaState extends State<reportBodyArea> {
       child: Text(
         text,
         style: TextStyle(
+          fontFamily: "Happiness-Sans-Bold",
           fontSize: MediaQuery.of(context).devicePixelRatio * 4,
           color: textColor,
         ),
@@ -52,6 +53,7 @@ class _reportBodyAreaState extends State<reportBodyArea> {
     return Text(
       text,
       style: TextStyle(
+        fontFamily: "Happiness-Sans-Bold",
         fontSize: MediaQuery.of(context).devicePixelRatio * 5,
         color: textColor,
       ),
@@ -215,6 +217,7 @@ class _reportBodyAreaState extends State<reportBodyArea> {
               child: Text(
                 widget.buttonName,
                 style: TextStyle(
+                  fontFamily: "Happiness-Sans-Bold",
                   fontSize: MediaQuery.of(context).devicePixelRatio * 7,
                 ),
                 textAlign: TextAlign.center,

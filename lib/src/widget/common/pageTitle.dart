@@ -12,7 +12,10 @@ class pageTitle extends StatelessWidget {
           top: MediaQuery.of(context).devicePixelRatio * 3, left: 45),
       child: Text(
         title,
-        style: TextStyle(fontSize: MediaQuery.of(context).devicePixelRatio * 5),
+        style: TextStyle(
+            fontSize: MediaQuery.of(context).devicePixelRatio * 5,
+            fontFamily: 'Happiness-Sans-Bold',
+            fontWeight: FontWeight.bold),
       ),
     );
   }
