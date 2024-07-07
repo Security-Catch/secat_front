@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:isolate';
 import 'dart:ui';
 
 import 'package:device_info_plus/device_info_plus.dart';
@@ -15,6 +16,9 @@ import 'package:front/src/widget/common/activeClass.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:telephony/telephony.dart';
 import 'package:http/http.dart' as http;
+
+import '../../main.dart';
+
 
 class FlutterSmsDetection {
   FlutterSmsDetection._();
@@ -193,7 +197,7 @@ class FlutterSmsDetection {
       // FlutterLocalNotification.showFullScreenNotification();
 
 
-      openMessageAlert(
+      await openMessageAlert(
         from,
           "alkdjglkagjdk",
         fullMessage
@@ -209,6 +213,7 @@ class FlutterSmsDetection {
     String m = message.body ?? "Error reading message body";
     String from = message.address ?? "Error reading message address";
 
+
     checkHandleSMS(from, m);
 
     // if (!_active) {
@@ -218,11 +223,12 @@ class FlutterSmsDetection {
   }
 
   static openMessageAlert(String phoneNumber, String titleContent, String messageContent) async {
-    const platform = MethodChannel("secat.jhl.dev/alert");
 
-    await platform.invokeMethod('notinog' , {
-          'message_title_content': titleContent,
-          'message' : messageContent,
-          'phone_number' : phoneNumber });
+    MethodChannel _channel = MethodChannel("secat.jhl.dev/alert", const StandardMethodCodec());
+
+    await _channel.invokeMethod('notinog' , {
+      'message_title_content': "titleContent",
+      'message' : "messageContent",
+      'phone_number' : "phoneNumber" });
   }
 }

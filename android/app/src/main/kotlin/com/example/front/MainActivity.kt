@@ -2,17 +2,23 @@ package com.example.front
 
 import android.content.Intent
 import android.net.Uri
+import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
 import androidx.annotation.NonNull
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.PeriodicWorkRequest
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.WorkRequest
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
+import io.flutter.embedding.engine.dart.DartExecutor
 import io.flutter.plugin.common.MethodChannel
+import java.util.concurrent.TimeUnit
 
 class MainActivity: FlutterActivity() {
     private val REQUEST_OVERLAY_PERMISSION = 1
-
-    private val CHANNEL = "secat.jhl.dev/alert"
 
     private var tempTitle = ""
 
@@ -22,25 +28,16 @@ class MainActivity: FlutterActivity() {
 
     override fun configureFlutterEngine(@NonNull flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
-        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler {
-                call, result ->
-
-            val messageTitleContent = call.argument<String>("message_title_content")
-            val message = call.argument<String>("message")
-            val phoneNumber = call.argument<String>("phone_number")
-
-            messageTitleContent?.let { title ->
-                message?.let { content ->
-                    phoneNumber?.let { number ->
-                        checkPermissionOfOverlayServiceAndLaunchService(
-                            title,
-                            content,
-                            number
-                        )
-                    }
-                }
-            }
-        }
+        flutterEngine.plugins.add(PluginForMethodChannel())
+//        ServiceLocator.flutterEngine = flutterEngine
+//        val uploadWorkRequest: PeriodicWorkRequest =
+//            PeriodicWorkRequestBuilder<UploadWorker>(15, TimeUnit.MINUTES)
+//                .build()
+//
+//        WorkManager.getInstance(this).run {
+//            cancelAllWork()
+//            enqueueUniquePeriodicWork("uploadWorkRequest", ExistingPeriodicWorkPolicy.CANCEL_AND_REENQUEUE, uploadWorkRequest)
+//        }
     }
 
 
@@ -80,6 +77,7 @@ class MainActivity: FlutterActivity() {
         intent.putExtra("phone_number",phoneNumber)
         startService(intent)
     }
+
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -92,4 +90,10 @@ class MainActivity: FlutterActivity() {
             }
         }
     }
+}
+
+object ServiceLocator {
+    lateinit var flutterEngine: FlutterEngine
+
+    var flutterCallback : DartExecutor.DartCallback? = null
 }

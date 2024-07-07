@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:front/main.dart';
 import 'package:front/src/screen/detail/guidePage.dart';
 import 'package:front/src/screen/detail/homeDetail.dart';
@@ -31,8 +32,10 @@ class _HomeState extends State<Home> {
       FlutterLocalNotification.init();
       FlutterLocalNotification.requestNotificationPermission();
     }
+
     super.initState();
   }
+
 
   onMessage(SmsMessage message) async {
     setState(() {

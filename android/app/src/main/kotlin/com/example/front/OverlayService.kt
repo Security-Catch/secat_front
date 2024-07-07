@@ -95,6 +95,7 @@ class OverlayService : Service() {
 
     override fun onDestroy() {
         super.onDestroy()
+        Log.d("caz tst","overlat service destroy")
         if (overlayView != null) windowManager!!.removeView(overlayView)
     }
 }

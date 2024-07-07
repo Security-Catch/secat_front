@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:front/src/screen/home.dart';
 import 'package:get/route_manager.dart';
 
 class MyApp extends StatelessWidget {
+
   const MyApp({super.key});
 
   @override
@@ -14,4 +16,6 @@ class MyApp extends StatelessWidget {
       home: const Home(),
     );
   }
+
+
 }
