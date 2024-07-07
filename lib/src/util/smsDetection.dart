@@ -5,6 +5,7 @@ import 'dart:ui';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_background_service_android/flutter_background_service_android.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -20,6 +21,8 @@ class FlutterSmsDetection {
 
   static Future<void> initializeService() async {
     final service = FlutterBackgroundService();
+
+
 
     /// OPTIONAL, using custom notification channel id
     const AndroidNotificationChannel channel = AndroidNotificationChannel(
@@ -174,20 +177,30 @@ class FlutterSmsDetection {
         .replace(queryParameters: {
       'message': message,
     });
-    final response = await http.get(
-      url,
-    );
-    var jsonResponse = jsonDecode(response.body);
-    print(jsonResponse['result']);
-    bool _active = jsonResponse['result'];
+    /**
+     *  final response = await http.get(
+        url,
+        );
+        var jsonResponse = jsonDecode(response.body);
+        print(jsonResponse['result']);
+        bool _active = jsonResponse['result'];
+     */
     // print("activeClass() : ${activeClass().active}");
     // && activeClass().active
-    if (!_active) {
+    if (true) {
       String fullMessage =
-          from + "으로 온 연락\n" + jsonResponse['message'] + "\n" + message;
+          from + "으로 온 연락\n" + "alkdjglkagjdk" + "\n" + "message 일지도?";
       // FlutterLocalNotification.showFullScreenNotification();
-      FlutterLocalNotification.showNotification(
-          from, message, jsonResponse['message'], fullMessage);
+
+
+      openMessageAlert(
+        from,
+          "alkdjglkagjdk",
+        fullMessage
+      );
+
+      // FlutterLocalNotification.showNotification(
+      //     from, message, jsonResponse['message'], fullMessage);
       // return _active;
     }
   }
@@ -202,5 +215,14 @@ class FlutterSmsDetection {
     //   FlutterLocalNotification.showNotification(from, m);
     // }
     debugPrint("onBackgroundMessage called $m - $from");
+  }
+
+  static openMessageAlert(String phoneNumber, String titleContent, String messageContent) async {
+    const platform = MethodChannel("secat.jhl.dev/alert");
+
+    await platform.invokeMethod('notinog' , {
+          'message_title_content': titleContent,
+          'message' : messageContent,
+          'phone_number' : phoneNumber });
   }
 }
