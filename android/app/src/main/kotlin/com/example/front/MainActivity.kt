@@ -15,6 +15,10 @@ import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.embedding.engine.dart.DartExecutor
 import io.flutter.plugin.common.MethodChannel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 
 class MainActivity: FlutterActivity() {
@@ -28,16 +32,7 @@ class MainActivity: FlutterActivity() {
 
     override fun configureFlutterEngine(@NonNull flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
-        flutterEngine.plugins.add(PluginForMethodChannel())
-//        ServiceLocator.flutterEngine = flutterEngine
-//        val uploadWorkRequest: PeriodicWorkRequest =
-//            PeriodicWorkRequestBuilder<UploadWorker>(15, TimeUnit.MINUTES)
-//                .build()
-//
-//        WorkManager.getInstance(this).run {
-//            cancelAllWork()
-//            enqueueUniquePeriodicWork("uploadWorkRequest", ExistingPeriodicWorkPolicy.CANCEL_AND_REENQUEUE, uploadWorkRequest)
-//        }
+
     }
 
 
@@ -58,25 +53,25 @@ class MainActivity: FlutterActivity() {
         } else {
             //권한이 있을때
             Log.d("caz tst" ,"active with per $messageTitleContent / $message  $phoneNumber")
-            startOverlayService(
-                messageTitleContent, message, phoneNumber
-            )
+//            startOverlayService(
+//                messageTitleContent, message, phoneNumber
+//            )
         }
     }
 
-    private fun startOverlayService(
-        messageTitleContent: String,
-        message : String,
-        phoneNumber: String
-    ) {
-        Log.d("caz tst" ,"gve me info of intent")
-
-        val intent = Intent(this, OverlayService::class.java)
-        intent.putExtra("message_title_content",messageTitleContent)
-        intent.putExtra("message",message)
-        intent.putExtra("phone_number",phoneNumber)
-        startService(intent)
-    }
+//    private fun startOverlayService(
+//        messageTitleContent: String,
+//        message : String,
+//        phoneNumber: String
+//    ) {
+//        Log.d("caz tst" ,"gve me info of intent")
+//
+//        val intent = Intent(this, OverlayService::class.java)
+//        intent.putExtra("message_title_content",messageTitleContent)
+//        intent.putExtra("message",message)
+//        intent.putExtra("phone_number",phoneNumber)
+//        startService(intent)
+//    }
 
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -84,7 +79,7 @@ class MainActivity: FlutterActivity() {
         if (requestCode == REQUEST_OVERLAY_PERMISSION) {
             if (Settings.canDrawOverlays(this)) {
                 Log.d("caz tst" ,"active with callback")
-                startOverlayService(tempTitle,tempMessage,tempNumber)
+//                startOverlayService(tempTitle,tempMessage,tempNumber)
             } else {
                 // Permission not granted
             }

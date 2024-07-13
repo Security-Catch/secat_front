@@ -19,14 +19,11 @@ import 'package:http/http.dart' as http;
 
 import '../../main.dart';
 
-
 class FlutterSmsDetection {
   FlutterSmsDetection._();
 
   static Future<void> initializeService() async {
     final service = FlutterBackgroundService();
-
-
 
     /// OPTIONAL, using custom notification channel id
     const AndroidNotificationChannel channel = AndroidNotificationChannel(
@@ -181,27 +178,19 @@ class FlutterSmsDetection {
         .replace(queryParameters: {
       'message': message,
     });
-    /**
-     *  final response = await http.get(
-        url,
-        );
-        var jsonResponse = jsonDecode(response.body);
-        print(jsonResponse['result']);
-        bool _active = jsonResponse['result'];
-     */
-    // print("activeClass() : ${activeClass().active}");
-    // && activeClass().active
-    if (true) {
-      String fullMessage =
-          from + "으로 온 연락\n" + "alkdjglkagjdk" + "\n" + "message 일지도?";
+
+    final response = await http.get(
+      url,
+    );
+    var jsonResponse = jsonDecode(response.body);
+    print(jsonResponse['result']);
+    bool _active = jsonResponse['result'];
+
+    if (_active) {
+      String fullMessage = from + "으로 온 연락\n" + message;
       // FlutterLocalNotification.showFullScreenNotification();
 
-
-      await openMessageAlert(
-        from,
-          "alkdjglkagjdk",
-        fullMessage
-      );
+      await openMessageAlert(from, jsonResponse['message'], fullMessage);
 
       // FlutterLocalNotification.showNotification(
       //     from, message, jsonResponse['message'], fullMessage);
@@ -213,7 +202,6 @@ class FlutterSmsDetection {
     String m = message.body ?? "Error reading message body";
     String from = message.address ?? "Error reading message address";
 
-
     checkHandleSMS(from, m);
 
     // if (!_active) {
@@ -222,13 +210,13 @@ class FlutterSmsDetection {
     debugPrint("onBackgroundMessage called $m - $from");
   }
 
-  static openMessageAlert(String phoneNumber, String titleContent, String messageContent) async {
-
-    MethodChannel _channel = MethodChannel("secat.jhl.dev/alert", const StandardMethodCodec());
-
-    await _channel.invokeMethod('notinog' , {
-      'message_title_content': "titleContent",
-      'message' : "messageContent",
-      'phone_number' : "phoneNumber" });
+  static openMessageAlert(
+      String phoneNumber, String titleContent, String messageContent) async {
+    MethodChannel _channel = const MethodChannel("secat.jhl.dev/alert");
+    _channel.invokeMethod('notinog', {
+      'message_title_content': titleContent,
+      'message': messageContent,
+      'phone_number': phoneNumber
+    });
   }
 }

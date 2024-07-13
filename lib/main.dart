@@ -14,7 +14,6 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   //register to background MethodChannel
 
-
   FlutterLocalNotification.onBackgroundNotificationresponse();
 
   await FlutterSmsDetection.initializeService();

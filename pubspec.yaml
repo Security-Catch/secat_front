@@ -43,6 +43,8 @@ dependencies:
   flutter_background_service_android: ^6.2.2
   telephony: ^0.2.0
   shared_preferences: ^2.2.3
+  message_overlay:
+    path: ../message_overlay
 
 dev_dependencies:
   flutter_test:
