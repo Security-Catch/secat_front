@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:isolate';
 import 'dart:ui';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_background_service_android/flutter_background_service_android.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -14,6 +16,8 @@ import 'package:front/src/widget/common/activeClass.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:telephony/telephony.dart';
 import 'package:http/http.dart' as http;
+
+import '../../main.dart';
 
 class FlutterSmsDetection {
   FlutterSmsDetection._();
@@ -174,20 +178,22 @@ class FlutterSmsDetection {
         .replace(queryParameters: {
       'message': message,
     });
+
     final response = await http.get(
       url,
     );
     var jsonResponse = jsonDecode(response.body);
     print(jsonResponse['result']);
     bool _active = jsonResponse['result'];
-    // print("activeClass() : ${activeClass().active}");
-    // && activeClass().active
-    if (!_active) {
-      String fullMessage =
-          from + "으로 온 연락\n" + jsonResponse['message'] + "\n" + message;
+
+    if (_active) {
+      String fullMessage = from + "으로 온 연락\n" + message;
       // FlutterLocalNotification.showFullScreenNotification();
-      FlutterLocalNotification.showNotification(
-          from, message, jsonResponse['message'], fullMessage);
+
+      await openMessageAlert(from, jsonResponse['message'], fullMessage);
+
+      // FlutterLocalNotification.showNotification(
+      //     from, message, jsonResponse['message'], fullMessage);
       // return _active;
     }
   }
@@ -202,5 +208,15 @@ class FlutterSmsDetection {
     //   FlutterLocalNotification.showNotification(from, m);
     // }
     debugPrint("onBackgroundMessage called $m - $from");
+  }
+
+  static openMessageAlert(
+      String phoneNumber, String titleContent, String messageContent) async {
+    MethodChannel _channel = const MethodChannel("secat.jhl.dev/alert");
+    _channel.invokeMethod('notinog', {
+      'message_title_content': titleContent,
+      'message': messageContent,
+      'phone_number': phoneNumber
+    });
   }
 }

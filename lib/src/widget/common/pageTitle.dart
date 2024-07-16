@@ -9,10 +9,13 @@ class pageTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(
-          top: MediaQuery.of(context).devicePixelRatio * 3, left: 45),
+          top: MediaQuery.of(context).devicePixelRatio * 3, left: 15),
       child: Text(
         title,
-        style: TextStyle(fontSize: MediaQuery.of(context).devicePixelRatio * 5),
+        style: TextStyle(
+            fontSize: MediaQuery.of(context).devicePixelRatio * 5,
+            fontFamily: 'Happiness-Sans-Bold',
+            fontWeight: FontWeight.bold),
       ),
     );
   }

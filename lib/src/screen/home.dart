@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:front/main.dart';
 import 'package:front/src/screen/detail/guidePage.dart';
 import 'package:front/src/screen/detail/homeDetail.dart';
@@ -31,8 +32,10 @@ class _HomeState extends State<Home> {
       FlutterLocalNotification.init();
       FlutterLocalNotification.requestNotificationPermission();
     }
+
     super.initState();
   }
+
 
   onMessage(SmsMessage message) async {
     setState(() {
@@ -78,6 +81,7 @@ class _HomeState extends State<Home> {
         title: Text(
           title,
           style: TextStyle(
+            fontFamily: "Happiness-Sans-Bold",
             fontSize: uniHeightValue * 5,
           ),
         ),
@@ -100,17 +104,19 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         title: Container(
           padding:
-              const EdgeInsets.only(left: 30, right: 30, top: 10, bottom: 10),
+              const EdgeInsets.only(left: 3, right: 30, top: 10, bottom: 10),
           decoration: BoxDecoration(
-            color: const Color.fromRGBO(0, 0, 0, 0.5),
+            // color: const Color.fromRGBO(0, 0, 0, 0.5),
             borderRadius: BorderRadius.circular(30),
           ),
           child: Text(
             'Security Catch',
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              color: Color(0xffFFD400),
+              // color: Color(0xffFFD400),
+              color: Color.fromRGBO(0, 0, 0, 0.5),
               fontSize: uniHeightValue * 6,
+              fontFamily: 'SB',
             ),
           ),
         ),
@@ -130,6 +136,7 @@ class _HomeState extends State<Home> {
                 child: Text(
                   '메뉴',
                   style: TextStyle(
+                    fontFamily: "Happiness-Sans-Bold",
                     fontSize: uniHeightValue * 6,
                   ),
                 ),

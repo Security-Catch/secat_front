@@ -43,6 +43,8 @@ dependencies:
   flutter_background_service_android: ^6.2.2
   telephony: ^0.2.0
   shared_preferences: ^2.2.3
+  message_overlay:
+    path: ../message_overlay
 
 dev_dependencies:
   flutter_test:
@@ -92,15 +94,34 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
+  fonts:
+    # - family: PretendardBold
+    # fonts:
+    #   - asset: asset/font/Pretendard-SemiBold.otf
+    - family: Pretendard
+      fonts:
+        - asset: asset/font/Pretendard-Bold.otf
+    - family: Happiness-Sans-Bold
+      fonts:
+        - asset: asset/font/Happiness-Sans-Bold.ttf
+    - family: Happiness-Sans-Regular
+      fonts:
+        - asset: asset/font/Happiness-Sans-Regular.ttf
+    - family: SB
+      fonts:
+        - asset: asset/font/SB 어그로OTF B.otf
+    - family: Cafe24Ssurround-v2.0
+      fonts:
+        - asset: asset/font/Cafe24Ssurround-v2.0.ttf
+    - family: MBC 1961 OTF M
+      fonts:
+        - asset: asset/font/MBC 1961 OTF M.otf
+
+    #       - asset: fonts/Schyler-Italic.ttf
+    #         style: italic
+    # - family: Trajan Pro
+    #   fonts:
+    #     - asset: fonts/TrajanPro.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #

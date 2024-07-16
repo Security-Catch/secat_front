@@ -11,17 +11,17 @@ class appBarArea extends StatelessWidget implements PreferredSizeWidget {
 
     return AppBar(
       title: Container(
-        padding:
-            const EdgeInsets.only(left: 30, right: 30, top: 10, bottom: 10),
-        decoration: BoxDecoration(
-          color: const Color.fromRGBO(0, 0, 0, 0.5),
-          borderRadius: BorderRadius.circular(30),
-        ),
+        padding: const EdgeInsets.only(right: 30, top: 10, bottom: 10),
+        // decoration: BoxDecoration(
+        //   // color: const Color.fromRGBO(0, 0, 0, 0.5),
+        //   borderRadius: BorderRadius.circular(30),
+        // ),
         child: Text(
           'Security Catch',
           style: TextStyle(
+            fontFamily: "SB",
             fontWeight: FontWeight.bold,
-            color: Color(0xffFFD400),
+            color: Color.fromRGBO(0, 0, 0, 0.5),
             fontSize: uniHeightValue * 6,
           ),
         ),

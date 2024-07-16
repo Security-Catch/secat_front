@@ -17,6 +17,7 @@ class ReportPart extends StatelessWidget {
             topRight: Radius.circular(20),
           ),
         ),
+        padding: EdgeInsets.only(top: 20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,

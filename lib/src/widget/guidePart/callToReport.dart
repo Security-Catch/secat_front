@@ -61,6 +61,7 @@ class _CallToReportContainerState extends State<CallToReportContainer> {
               TextSpan(
                   text: widget.phone,
                   style: TextStyle(
+                      fontFamily: "Happiness-Sans-Bold",
                       color: Color(0xff46CC6B),
                       fontSize: MediaQuery.of(context).devicePixelRatio * 5,
                       fontWeight: FontWeight.bold)),
