@@ -174,7 +174,7 @@ class FlutterSmsDetection {
   }
 
   static checkHandleSMS(String from, String message) async {
-    final url = Uri.parse("http://192.168.0.11:3000/smishing/check/")
+    final url = Uri.parse("http://200.5.60.155:3000/smishing/check/")
         .replace(queryParameters: {
       'message': message,
     });
@@ -186,7 +186,8 @@ class FlutterSmsDetection {
     print(jsonResponse['result']);
     bool _active = jsonResponse['result'];
 
-    if (_active) {
+    // !_active
+    if (!_active) {
       String fullMessage = from + "으로 온 연락\n" + message;
       // FlutterLocalNotification.showFullScreenNotification();
 
