@@ -13,14 +13,17 @@ class _HomeDetailState extends State<HomeDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        AlarmButton(),
-        Spacer(),
-        ReportPart(),
-      ],
-    ));
+      body: const SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            AlarmButton(),
+            Spacer(),
+            ReportPart(),
+          ],
+        ),
+      ),
+    );
   }
 }
