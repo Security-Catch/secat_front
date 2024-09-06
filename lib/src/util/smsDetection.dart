@@ -10,9 +10,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_background_service_android/flutter_background_service_android.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:front/src/util/alarmController.dart';
 import 'package:front/src/util/notification.dart';
 import 'package:front/src/widget/alarmButtonPart/alarmButtonPart.dart';
 import 'package:front/src/widget/common/activeClass.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:telephony/telephony.dart';
 import 'package:http/http.dart' as http;
@@ -185,9 +187,10 @@ class FlutterSmsDetection {
     var jsonResponse = jsonDecode(response.body);
     print(jsonResponse['result']);
     bool _active = jsonResponse['result'];
+    final AlarmController alarmController = Get.find();
 
     // !_active
-    if (!_active) {
+    if (!_active && alarmController.alarmState.value) {
       String fullMessage = from + "으로 온 연락\n" + message;
       // FlutterLocalNotification.showFullScreenNotification();
 
