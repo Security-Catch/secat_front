@@ -9,7 +9,8 @@ class pageTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(
-          top: MediaQuery.of(context).devicePixelRatio * 3, left: 15),
+          top: MediaQuery.of(context).size.height * 0.01,
+          left: MediaQuery.of(context).size.width * 0.035),
       child: Text(
         title,
         style: TextStyle(

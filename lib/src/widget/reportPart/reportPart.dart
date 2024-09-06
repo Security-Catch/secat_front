@@ -16,10 +16,12 @@ class ReportPart extends StatelessWidget {
             topRight: Radius.circular(20),
           ),
         ),
-        // padding: EdgeInsets.only(top: 10),
+        // padding: EdgeInsets.only(top: 15),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
+          // mainAxisAlignment: MainAxisAlignment.center,
+          // mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly, // 요소들이 중앙에 균등하게 배치
+          crossAxisAlignment: CrossAxisAlignment.center, // 수평 가운데 정렬
           children: <Widget>[
             homeContainer(
               imageUrl: 'asset/checkIcon.png',

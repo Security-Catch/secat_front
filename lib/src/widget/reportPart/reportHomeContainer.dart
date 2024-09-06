@@ -32,7 +32,10 @@ class homeContainer extends StatelessWidget {
       child: Container(
         height: MediaQuery.of(context).size.height * 0.09,
         width: double.infinity,
-        margin: const EdgeInsets.only(left: 20, right: 20, bottom: 15),
+        margin: EdgeInsets.only(
+          left: MediaQuery.of(context).size.width * 0.05,
+          right: MediaQuery.of(context).size.width * 0.05,
+        ),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(15),

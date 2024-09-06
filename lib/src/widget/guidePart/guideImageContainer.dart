@@ -8,7 +8,10 @@ class GuideImageContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(left: 50, right: 50, top: 20),
+      padding: EdgeInsets.only(
+          left: MediaQuery.of(context).size.width * 0.1,
+          right: MediaQuery.of(context).size.width * 0.1,
+          top: MediaQuery.of(context).size.height * 0.025),
       child: Image.asset(imageUrl),
     );
   }

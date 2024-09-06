@@ -165,9 +165,9 @@ class _reportBodyAreaState extends State<reportBodyArea> {
         Container(
           margin: EdgeInsets.only(
               top: MediaQuery.of(context).devicePixelRatio * 10,
-              left: 15,
-              right: 15),
-          padding: EdgeInsets.all(5),
+              left: MediaQuery.of(context).size.width * 0.03,
+              right: MediaQuery.of(context).size.width * 0.03),
+          padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.015),
           height: MediaQuery.of(context).size.width,
           width: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(
@@ -183,7 +183,8 @@ class _reportBodyAreaState extends State<reportBodyArea> {
                 : handleCheckSubmitted,
             decoration: InputDecoration(
               hintText: widget.hiddenMessage,
-              contentPadding: EdgeInsets.all(3),
+              contentPadding:
+                  EdgeInsets.all(MediaQuery.of(context).size.width * 0.01),
               border: InputBorder.none,
             ),
             style: TextStyle(
@@ -202,10 +203,11 @@ class _reportBodyAreaState extends State<reportBodyArea> {
           },
           child: Center(
             child: Container(
+              alignment: Alignment.center,
               margin: EdgeInsets.only(
                   top: MediaQuery.of(context).devicePixelRatio * 50,
-                  left: 15,
-                  right: 15),
+                  left: MediaQuery.of(context).size.width * 0.05,
+                  right: MediaQuery.of(context).size.width * 0.05),
               padding:
                   EdgeInsets.all(MediaQuery.of(context).devicePixelRatio * 6),
               height: MediaQuery.of(context).devicePixelRatio * 23,

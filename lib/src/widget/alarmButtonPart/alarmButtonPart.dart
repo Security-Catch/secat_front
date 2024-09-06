@@ -46,14 +46,16 @@ class _AlarmButtonState extends State<AlarmButton> {
           ),
           width: MediaQuery.of(context).size.width - 60,
           height: MediaQuery.of(context).size.width - 60,
-          margin: const EdgeInsets.only(top: 58),
+          margin:
+              EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.067),
           alignment: Alignment.center,
           child: Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Container(
-                  margin: const EdgeInsets.only(bottom: 5),
+                  margin: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).size.height * 0.005),
                   child: active
                       ? Image.asset(
                           'asset/mainLogo.png',
