@@ -85,7 +85,7 @@ class _reportBodyAreaState extends State<reportBodyArea> {
   }
 
   void handleCheckSubmitted(String text) async {
-    final url = Uri.parse("http://200.5.60.155:3000/smishing/check/")
+    final url = Uri.parse("http://192.168.0.11:3000/smishing/check/")
         .replace(queryParameters: {
       'message': text,
     });
@@ -116,7 +116,7 @@ class _reportBodyAreaState extends State<reportBodyArea> {
   }
 
   void handleReportSubmitted(String text) async {
-    final url = Uri.parse("http://200.5.60.155:3000/smishing/report/")
+    final url = Uri.parse("http://192.168.0.11:3000/smishing/report/")
         .replace(queryParameters: {
       'message': text,
     });

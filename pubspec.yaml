@@ -42,7 +42,7 @@ dependencies:
   flutter_background_service: ^5.0.5
   flutter_background_service_android: ^6.2.2
   telephony: ^0.2.0
-  shared_preferences: ^2.2.3
+  shared_preferences: ^2.3.2
   message_overlay:
     path: ../message_overlay
   permission_handler: ^11.3.1
