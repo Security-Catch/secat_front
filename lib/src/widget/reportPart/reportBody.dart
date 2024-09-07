@@ -54,7 +54,7 @@ class _reportBodyAreaState extends State<reportBodyArea> {
       text,
       style: TextStyle(
         fontFamily: "Happiness-Sans-Bold",
-        fontSize: MediaQuery.of(context).devicePixelRatio * 5,
+        fontSize: MediaQuery.of(context).devicePixelRatio * 4.8,
         color: textColor,
       ),
     );
@@ -124,8 +124,9 @@ class _reportBodyAreaState extends State<reportBodyArea> {
       url,
     );
     var jsonResponse = jsonDecode(response.body);
-    print(jsonResponse['isSucess']);
-    if (jsonResponse['isSucess']) {
+    print(jsonResponse);
+    _active = jsonResponse['isSuccess'];
+    if (_active) {
       await showDialog<void>(
           context: context,
           builder: (BuildContext context) {

@@ -1,7 +1,5 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:front/src/util/alarmController.dart';
 import 'package:front/src/util/notification.dart';
 import 'package:front/src/widget/common/activeClass.dart';
 import 'package:get/get.dart';
@@ -14,29 +12,64 @@ class AlarmButton extends StatefulWidget {
   State<AlarmButton> createState() => _AlarmButtonState();
 }
 
-class _AlarmButtonState extends State<AlarmButton> {
-  late SharedPreferences prefs;
+class _AlarmButtonState extends State<AlarmButton> with WidgetsBindingObserver {
   bool alarmState = true; // 기본값을 true로 설정
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _loadAlarmState(); // 상태 로드
   }
 
   // SharedPreferences에서 알람 상태를 불러오는 함수
   Future<void> _loadAlarmState() async {
-    prefs = await SharedPreferences.getInstance();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       alarmState = prefs.getBool('alarmState') ?? true; // 기본값 true
     });
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused) {
+      // 앱이 백그라운드로 전환될 때 상태 저장
+      print('ggam : 앱이 백그라운드로 전환되었습니다.');
+      _saveAlarmState();
+    } else if (state == AppLifecycleState.resumed) {
+      // 다시 포그라운드로 돌아올 때 상태 로드
+      print('ggam : 앱이 포그라운드로 돌아왔습니다.');
+      _loadAlarmState();
+    }
+  }
+
+  Future<void> _saveAlarmState() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool success = await prefs.setBool('alarmState', alarmState);
+    if (!success) {
+      print("ggam : SharedPreferences 저장 실패 back ${alarmState}");
+    } else {
+      print("ggam : SharedPreferences 저장 성공 back ${alarmState}");
+    }
   }
 
   Future<void> _setActive() async {
     setState(() {
       alarmState = !alarmState;
     });
-    await prefs.setBool('alarmState', alarmState); // 상태 저장
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool success = await prefs.setBool('alarmState', alarmState); // 상태 저장 확인
+    if (!success) {
+      print("ggam : SharedPreferences 저장 실패 ${alarmState}");
+    } else {
+      print("ggam : SharedPreferences 저장 성공 ${alarmState}");
+    }
   }
 
   @override
