@@ -20,7 +20,7 @@ class GuidePage extends StatelessWidget {
           children: [
             const pageTitle(title: "피싱 대응 가이드"),
             Container(
-              margin: const EdgeInsets.all(10),
+              margin: EdgeInsets.all(MediaQuery.of(context).size.width * 0.03),
             ),
             Expanded(
               child: SingleChildScrollView(
@@ -30,7 +30,8 @@ class GuidePage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Container(
-                        padding: const EdgeInsets.only(bottom: 30),
+                        padding: EdgeInsets.only(
+                            bottom: MediaQuery.of(context).size.height * 0.035),
                         decoration: BoxDecoration(
                             border: const Border(
                                 bottom: BorderSide(color: Colors.black)),
@@ -66,12 +67,14 @@ class GuidePage extends StatelessWidget {
                           border:
                               Border(bottom: BorderSide(color: Colors.black)),
                         ),
-                        padding: const EdgeInsets.only(bottom: 30),
+                        padding: EdgeInsets.only(
+                            bottom: MediaQuery.of(context).size.height * 0.035),
                       ),
                       const pageTitle(title: '악성앱 스미싱 피해 흐름도'),
                       const GuideImageContainer(imageUrl: 'asset/guide-4.png'),
                       Container(
-                        margin: const EdgeInsets.only(top: 30),
+                        margin: EdgeInsets.only(
+                            top: MediaQuery.of(context).size.height * 0.035),
                       ),
                     ],
                   )),

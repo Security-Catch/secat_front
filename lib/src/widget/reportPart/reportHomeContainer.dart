@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:front/src/screen/detail/checkPage.dart';
+import 'package:front/src/screen/detail/guidePage.dart';
 import 'package:front/src/screen/detail/reportPage.dart';
 
 class homeContainer extends StatelessWidget {
@@ -17,16 +18,24 @@ class homeContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => type == '검사' ? checkPage() : reportPage(),
-            ));
+        Navigator.push(context, MaterialPageRoute(
+          builder: (context) {
+            if (type == '검사') {
+              return checkPage();
+            } else if (type == '신고') {
+              return reportPage();
+            }
+            return GuidePage();
+          },
+        ));
       },
       child: Container(
-        height: MediaQuery.of(context).size.height * 0.1,
+        height: MediaQuery.of(context).size.height * 0.09,
         width: double.infinity,
-        margin: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+        margin: EdgeInsets.only(
+          left: MediaQuery.of(context).size.width * 0.05,
+          right: MediaQuery.of(context).size.width * 0.05,
+        ),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(15),
@@ -45,7 +54,7 @@ class homeContainer extends StatelessWidget {
             Text(buttonName,
                 style: TextStyle(
                     fontFamily: "Happiness-Sans-Bold",
-                    fontSize: MediaQuery.of(context).devicePixelRatio * 8))
+                    fontSize: MediaQuery.of(context).devicePixelRatio * 7))
           ],
         ),
       ),

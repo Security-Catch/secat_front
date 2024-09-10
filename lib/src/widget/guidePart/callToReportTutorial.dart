@@ -8,7 +8,7 @@ class CallToReportTutorial extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(left: 50),
+      margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.12),
       child: Text(
         detailText,
         style: TextStyle(fontSize: MediaQuery.of(context).devicePixelRatio * 4),

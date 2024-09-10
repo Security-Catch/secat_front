@@ -41,7 +41,11 @@ class _CallToReportContainerState extends State<CallToReportContainer> {
         });
       },
       child: Container(
-        margin: EdgeInsets.only(left: 45, right: 45, top: 15, bottom: 10),
+        margin: EdgeInsets.only(
+            left: MediaQuery.of(context).size.width * 0.1,
+            right: MediaQuery.of(context).size.width * 0.1,
+            top: MediaQuery.of(context).size.height * 0.02,
+            bottom: MediaQuery.of(context).size.height * 0.01),
         // padding: EdgeInsets.only(left: 30),
         height: MediaQuery.of(context).devicePixelRatio * 18,
         decoration: BoxDecoration(
@@ -52,9 +56,11 @@ class _CallToReportContainerState extends State<CallToReportContainer> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Container(
-              width: 23,
-              height: 23,
-              margin: EdgeInsets.only(left: 10, right: 10),
+              width: MediaQuery.of(context).size.width * 0.1,
+              height: MediaQuery.of(context).size.height * 0.025,
+              // margin: EdgeInsets.only(
+              //     left: MediaQuery.of(context).size.width * 0.025,
+              //     right: MediaQuery.of(context).size.width * 0.025),
               child: Image.asset('asset/callIcon.png'),
             ),
             Text.rich(TextSpan(children: [

@@ -9,7 +9,6 @@ class ReportPart extends StatelessWidget {
     return Container(
         width: double.infinity,
         height: MediaQuery.of(context).size.height * 0.35,
-        // margin: EdgeInsets.only(top: 50),
         decoration: BoxDecoration(
           color: const Color.fromRGBO(249, 229, 134, 0.5),
           borderRadius: BorderRadius.only(
@@ -17,20 +16,26 @@ class ReportPart extends StatelessWidget {
             topRight: Radius.circular(20),
           ),
         ),
-        padding: EdgeInsets.only(top: 20),
+        // padding: EdgeInsets.only(top: 15),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
+          // mainAxisAlignment: MainAxisAlignment.center,
+          // mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly, // 요소들이 중앙에 균등하게 배치
+          crossAxisAlignment: CrossAxisAlignment.center, // 수평 가운데 정렬
           children: <Widget>[
             homeContainer(
-              imageUrl: 'asset/checkLogo.png',
+              imageUrl: 'asset/checkIcon.png',
               buttonName: '메시지 검사하기',
               type: '검사',
             ),
             homeContainer(
-                imageUrl: 'asset/reportLogo.png',
+                imageUrl: 'asset/reportIcon.png',
                 buttonName: '스미싱 신고하기',
-                type: '신고')
+                type: '신고'),
+            homeContainer(
+                imageUrl: 'asset/guideIcon.png',
+                buttonName: '피싱 대응 가이드',
+                type: '가이드')
           ],
         ));
   }

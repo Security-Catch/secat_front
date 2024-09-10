@@ -11,9 +11,12 @@ class appBarArea extends StatelessWidget implements PreferredSizeWidget {
 
     return AppBar(
       title: Container(
-        padding: const EdgeInsets.only(right: 30, top: 10, bottom: 10),
+        padding: EdgeInsets.only(
+            right: MediaQuery.of(context).size.width * 0.07,
+            top: MediaQuery.of(context).size.height * 0.012,
+            bottom: MediaQuery.of(context).size.height * 0.012),
         // decoration: BoxDecoration(
-        //   // color: const Color.fromRGBO(0, 0, 0, 0.5),
+        //   color: const Color.fromRGBO(0, 0, 0, 0.5),
         //   borderRadius: BorderRadius.circular(30),
         // ),
         child: Text(

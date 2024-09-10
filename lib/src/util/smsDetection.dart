@@ -13,6 +13,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:front/src/util/notification.dart';
 import 'package:front/src/widget/alarmButtonPart/alarmButtonPart.dart';
 import 'package:front/src/widget/common/activeClass.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:telephony/telephony.dart';
 import 'package:http/http.dart' as http;
@@ -174,7 +175,7 @@ class FlutterSmsDetection {
   }
 
   static checkHandleSMS(String from, String message) async {
-    final url = Uri.parse("http://200.5.60.155:3000/smishing/check/")
+    final url = Uri.parse("http://192.168.0.11:3000/smishing/check/")
         .replace(queryParameters: {
       'message': message,
     });
@@ -185,9 +186,11 @@ class FlutterSmsDetection {
     var jsonResponse = jsonDecode(response.body);
     print(jsonResponse['result']);
     bool _active = jsonResponse['result'];
+    final prefs = await SharedPreferences.getInstance();
+    bool alarmState = prefs.getBool('alarmState') ?? true;
+    print("ggam : alarm state ${alarmState}");
 
-    // !_active
-    if (!_active) {
+    if (!_active && alarmState) {
       String fullMessage = from + "으로 온 연락\n" + message;
       // FlutterLocalNotification.showFullScreenNotification();
 
