@@ -124,8 +124,6 @@ class FlutterSmsDetection {
     Timer.periodic(const Duration(seconds: 1), (timer) async {
       if (service is AndroidServiceInstance) {
         if (await service.isForegroundService()) {
-          /// OPTIONAL for use custom notification
-          /// the notification id must be equals with AndroidConfiguration when you call configure() method.
           flutterLocalNotificationsPlugin.show(
             888,
             'COOL SERVICE',
@@ -140,7 +138,6 @@ class FlutterSmsDetection {
             ),
           );
 
-          // if you don't using custom notification, uncomment this
           service.setForegroundNotificationInfo(
             title: "Security Catch",
             content: "작동 중\n ${DateTime.now()}",
@@ -148,10 +145,6 @@ class FlutterSmsDetection {
         }
       }
 
-      /// you can see this log in logcat
-      // print('FLUTTER BACKGROUND SERVICE: ${DateTime.now()}');
-
-      // test using external plugin
       final deviceInfo = DeviceInfoPlugin();
       String? device;
       if (Platform.isAndroid) {
@@ -176,7 +169,7 @@ class FlutterSmsDetection {
 
   static checkHandleSMS(String from, String message) async {
     try {
-      final url = Uri.parse("http://200.5.60.236:3000/smishing/check/")
+      final url = Uri.parse("http://200.5.61.70:3000/smishing/check/")
           .replace(queryParameters: {
         'message': message,
       });
@@ -194,6 +187,7 @@ class FlutterSmsDetection {
           print(jsonResponse['result']);
           bool _active = jsonResponse['result'];
           final prefs = await SharedPreferences.getInstance();
+          await prefs.reload();
           bool alarmState = prefs.getBool('alarmState') ?? true;
           print("ggam : alarm state ${alarmState}");
 

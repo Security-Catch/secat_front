@@ -25,12 +25,6 @@ class _reportBodyAreaState extends State<reportBodyArea> {
 
   bool _active = false;
 
-  // _setActive() {
-  //   setState(() {
-  //     _active = !_active;
-  //   });
-  // }
-
   TextButton myButton(String text, Color textColor) {
     return TextButton(
       onPressed: () {
@@ -86,7 +80,7 @@ class _reportBodyAreaState extends State<reportBodyArea> {
 
   void handleCheckSubmitted(String text) async {
     try {
-      final url = Uri.parse("http://200.5.60.236:3000/smishing/check/")
+      final url = Uri.parse("http://200.5.61.70:3000/smishing/check/")
           .replace(queryParameters: {
         'message': text,
       });
@@ -170,7 +164,7 @@ class _reportBodyAreaState extends State<reportBodyArea> {
 
   void handleReportSubmitted(String text) async {
     try {
-      final url = Uri.parse("http://200.5.60.236:3000/smishing/report/")
+      final url = Uri.parse("http://200.5.61.70:3000/smishing/report/")
           .replace(queryParameters: {
         'message': text,
       });
