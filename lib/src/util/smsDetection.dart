@@ -124,8 +124,6 @@ class FlutterSmsDetection {
     Timer.periodic(const Duration(seconds: 1), (timer) async {
       if (service is AndroidServiceInstance) {
         if (await service.isForegroundService()) {
-          /// OPTIONAL for use custom notification
-          /// the notification id must be equals with AndroidConfiguration when you call configure() method.
           flutterLocalNotificationsPlugin.show(
             888,
             'COOL SERVICE',
@@ -140,7 +138,6 @@ class FlutterSmsDetection {
             ),
           );
 
-          // if you don't using custom notification, uncomment this
           service.setForegroundNotificationInfo(
             title: "Security Catch",
             content: "작동 중\n ${DateTime.now()}",
@@ -148,10 +145,6 @@ class FlutterSmsDetection {
         }
       }
 
-      /// you can see this log in logcat
-      // print('FLUTTER BACKGROUND SERVICE: ${DateTime.now()}');
-
-      // test using external plugin
       final deviceInfo = DeviceInfoPlugin();
       String? device;
       if (Platform.isAndroid) {
@@ -175,30 +168,59 @@ class FlutterSmsDetection {
   }
 
   static checkHandleSMS(String from, String message) async {
-    final url = Uri.parse("http://192.168.0.11:3000/smishing/check/")
-        .replace(queryParameters: {
-      'message': message,
-    });
+    try {
+      final url = Uri.parse("http://200.5.61.70:3000/smishing/check/")
+          .replace(queryParameters: {
+        'message': message,
+      });
 
-    final response = await http.get(
-      url,
-    );
-    var jsonResponse = jsonDecode(response.body);
-    print(jsonResponse['result']);
-    bool _active = jsonResponse['result'];
-    final prefs = await SharedPreferences.getInstance();
-    bool alarmState = prefs.getBool('alarmState') ?? true;
-    print("ggam : alarm state ${alarmState}");
+      final response = await http.get(
+        url,
+      );
 
-    if (!_active && alarmState) {
-      String fullMessage = from + "으로 온 연락\n" + message;
-      // FlutterLocalNotification.showFullScreenNotification();
+      if (response.statusCode == 200) {
+        var jsonResponse = jsonDecode(response.body);
+        final code = jsonResponse['code'];
 
-      await openMessageAlert(from, jsonResponse['message'], fullMessage);
+        if (code == 200) {
+          // 정상적으로 작동할 때
+          print(jsonResponse['result']);
+          bool _active = jsonResponse['result'];
+          final prefs = await SharedPreferences.getInstance();
+          await prefs.reload();
+          bool alarmState = prefs.getBool('alarmState') ?? true;
+          print("ggam : alarm state ${alarmState}");
 
-      // FlutterLocalNotification.showNotification(
-      //     from, message, jsonResponse['message'], fullMessage);
-      // return _active;
+          if (!_active && alarmState) {
+            String fullMessage = from + "으로 온 연락\n" + message;
+            // FlutterLocalNotification.showFullScreenNotification();
+
+            await openMessageAlert(from, jsonResponse['message'], fullMessage);
+            // FlutterLocalNotification.showNotification(
+            //     from, message, jsonResponse['message'], fullMessage);
+            // return _active;
+          }
+        } else {
+          print('서버 에러: ${jsonResponse['error'] ?? '에러 정보가 없습니다.'}');
+        }
+      } else {
+        // 상태 코드가 200이 아닌 경우
+        print('응답 에러: ${response.statusCode}');
+        print('응답 본문: ${response.body}'); // 응답 전체를 출력해서 구조 확인
+        try {
+          // 에러 메시지가 'error' 필드에 있는지 확인
+          final errorResponse = jsonDecode(response.body);
+          print(
+              '에러 메시지: ${errorResponse['error'] ?? '서버가 에러 메시지를 보내지 않았습니다.'}');
+          FlutterLocalNotification.showErrorNotification(
+              "서버 메시지", errorResponse['error'] ?? '서버가 에러 메시지를 보내지 않았습니다.');
+        } catch (jsonError) {
+          // JSON 파싱 에러 처리
+          print('응답을 JSON으로 파싱하는 중 에러 발생: $jsonError');
+        }
+      }
+    } catch (e) {
+      print('네트워크 또는 서버 에러 발생: $e');
     }
   }
 

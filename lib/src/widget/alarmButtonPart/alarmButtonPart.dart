@@ -18,15 +18,15 @@ class _AlarmButtonState extends State<AlarmButton> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
+    // WidgetsBinding.instance.addObserver(this);
     _loadAlarmState(); // 상태 로드
   }
 
   // SharedPreferences에서 알람 상태를 불러오는 함수
-  Future<void> _loadAlarmState() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+  void _loadAlarmState() async {
+    final prefs = await SharedPreferences.getInstance();
     setState(() {
-      alarmState = prefs.getBool('alarmState') ?? true; // 기본값 true
+      alarmState = prefs.getBool('alarmState') ?? true;
     });
   }
 
@@ -52,6 +52,7 @@ class _AlarmButtonState extends State<AlarmButton> with WidgetsBindingObserver {
   Future<void> _saveAlarmState() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool success = await prefs.setBool('alarmState', alarmState);
+    await prefs.reload();
     if (!success) {
       print("ggam : SharedPreferences 저장 실패 back ${alarmState}");
     } else {
@@ -60,16 +61,18 @@ class _AlarmButtonState extends State<AlarmButton> with WidgetsBindingObserver {
   }
 
   Future<void> _setActive() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       alarmState = !alarmState;
+      prefs.setBool('alarmState', alarmState); // 상태 저장 확인
+      // prefs.reload();
     });
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool success = await prefs.setBool('alarmState', alarmState); // 상태 저장 확인
-    if (!success) {
-      print("ggam : SharedPreferences 저장 실패 ${alarmState}");
-    } else {
-      print("ggam : SharedPreferences 저장 성공 ${alarmState}");
-    }
+
+    // if (!success) {
+    //   print("ggam : SharedPreferences 저장 실패 ${alarmState}");
+    // } else {
+    //   print("ggam : SharedPreferences 저장 성공 ${alarmState}");
+    // }
   }
 
   @override
