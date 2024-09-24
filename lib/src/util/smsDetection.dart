@@ -169,7 +169,7 @@ class FlutterSmsDetection {
 
   static checkHandleSMS(String from, String message) async {
     try {
-      final url = Uri.parse("http://200.5.61.70:3000/smishing/check/")
+      final url = Uri.parse("http://118.221.127.42:8000/detect")
           .replace(queryParameters: {
         'message': message,
       });
@@ -179,7 +179,9 @@ class FlutterSmsDetection {
       );
 
       if (response.statusCode == 200) {
-        var jsonResponse = jsonDecode(response.body);
+        // var jsonResponse = jsonDecode(response.body);
+        var jsonResponse = jsonDecode(utf8.decode(response.bodyBytes));
+
         final code = jsonResponse['code'];
 
         if (code == 200) {
@@ -195,6 +197,8 @@ class FlutterSmsDetection {
             String fullMessage = from + "으로 온 연락\n" + message;
             // FlutterLocalNotification.showFullScreenNotification();
 
+            print("ggam active : ${_active}");
+            print("ggam message : ${jsonResponse['message']}");
             await openMessageAlert(from, jsonResponse['message'], fullMessage);
             // FlutterLocalNotification.showNotification(
             //     from, message, jsonResponse['message'], fullMessage);

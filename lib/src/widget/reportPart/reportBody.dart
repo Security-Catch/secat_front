@@ -80,7 +80,7 @@ class _reportBodyAreaState extends State<reportBodyArea> {
 
   void handleCheckSubmitted(String text) async {
     try {
-      final url = Uri.parse("http://200.5.61.70:3000/smishing/check/")
+      final url = Uri.parse("http://118.221.127.42:8000/detect")
           .replace(queryParameters: {
         'message': text,
       });
@@ -90,11 +90,12 @@ class _reportBodyAreaState extends State<reportBodyArea> {
       );
 
       if (response.statusCode == 200) {
-        var jsonResponse = jsonDecode(response.body);
+        // var jsonResponse = jsonDecode(response.body);
+        var jsonResponse = jsonDecode(utf8.decode(response.bodyBytes));
         final code = jsonResponse['code'];
 
         if (code == 200) {
-          var jsonResponse = jsonDecode(response.body);
+          var jsonResponse = jsonDecode(utf8.decode(response.bodyBytes));
           print(jsonResponse['result']);
           _active = jsonResponse['result'];
 
@@ -164,7 +165,7 @@ class _reportBodyAreaState extends State<reportBodyArea> {
 
   void handleReportSubmitted(String text) async {
     try {
-      final url = Uri.parse("http://200.5.61.70:3000/smishing/report/")
+      final url = Uri.parse("http://118.221.127.42:8000/detect")
           .replace(queryParameters: {
         'message': text,
       });

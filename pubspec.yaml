@@ -46,6 +46,7 @@ dependencies:
   message_overlay:
     path: ../message_overlay
   permission_handler: ^11.3.1
+  flutter_launcher_icons: ^0.14.0
 
 dev_dependencies:
   flutter_test:
